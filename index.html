@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>HCV Reflex Testing｜20 分鐘 Seminar 逐字稿翻頁版</title>
+<style>
+  body[data-theme="light"] {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --text: #111827;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --accent: #0f4c81;
+    --accent-soft: #e0f2fe;
+    --accent-text: #0369a1;
+    --hl-bg: #fef3c7;
+    --hl-text: #92400e;
+    --btn-bg: #0f4c81;
+    --btn-text: #ffffff;
+    --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  }
+  body[data-theme="dark"] {
+    --bg: #0b1120;
+    --surface: #131c31;
+    --surface-2: #1e293b;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #26344d;
+    --accent: #38bdf8;
+    --accent-soft: rgba(56, 189, 248, 0.14);
+    --accent-text: #7dd3fc;
+    --hl-bg: rgba(251, 191, 36, 0.22);
+    --hl-text: #fde68a;
+    --btn-bg: #0284c7;
+    --btn-text: #ffffff;
+    --shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    background: var(--bg);
+  }
+
+  /* Top Progress Bar */
+  .progress-track {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.25s ease;
+  }
+
+  /* Top Toolbar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: calc(10px + env(safe-area-inset-top)) 14px 10px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .top-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .icon-btn {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    border-radius: 10px;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .icon-btn:active {
+    transform: scale(0.96);
+  }
+
+  .timer-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 11px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 13.5px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+  }
+  .timer-pill.running {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+  .timer-pill.overtime {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+  }
+  .timer-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+  .timer-pill.running .timer-dot {
+    background: var(--accent);
+    animation: pulse 1.2s infinite;
+  }
+  .timer-pill.overtime .timer-dot {
+    background: #ef4444;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .top-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Main Swipe Viewport */
+  .stage {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  .card-scroller {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 14px 28px 14px;
+    transition: transform 0.22s ease, opacity 0.2s ease;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 18px 22px 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .part-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    letter-spacing: 0.2px;
+  }
+
+  .time-chip {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .slide-title {
+    margin: 0 0 14px 0;
+    font-size: 19px;
+    line-height: 1.35;
+    font-weight: 800;
+    color: var(--text);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .script-body {
+    font-size: var(--script-size, 20px);
+    line-height: 1.85;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    word-break: break-word;
+  }
+
+  .script-body p {
+    margin: 0 0 16px 0;
+  }
+  .script-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .script-body strong {
+    background: var(--hl-bg);
+    color: var(--hl-text);
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-weight: 700;
+  }
+
+  /* Next Slide Hint */
+  .next-hint {
+    margin-top: 18px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    border: 1px dashed var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .next-hint strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* Q&A Accordion on Page 18 */
+  .qa-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+  .qa-q {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 13px 14px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .qa-a {
+    padding: 0 14px 14px 14px;
+    font-size: calc(var(--script-size, 20px) - 2px);
+    line-height: 1.75;
+    color: var(--text);
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding-top: 11px;
+  }
+  .qa-item.collapsed .qa-a {
+    display: none;
+  }
+  .qa-arrow {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    transition: transform 0.2s;
+  }
+  .qa-item.collapsed .qa-arrow {
+    transform: rotate(-90deg);
+  }
+
+  /* Bottom Navigation Bar */
+  .bottombar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px calc(12px + env(safe-area-inset-bottom)) 14px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .nav-btn {
+    flex: 1;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .nav-btn.primary {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border-color: transparent;
+  }
+  .nav-btn:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+  .nav-btn:not(:disabled):active {
+    transform: scale(0.97);
+  }
+
+  .page-pill {
+    min-width: 84px;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.15;
+  }
+  .page-pill small {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* Slide Drawer (Bottom Sheet) */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .drawer-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .drawer {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 100%);
+    width: 100%;
+    max-width: 680px;
+    max-height: 78dvh;
+    background: var(--surface);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-top: 1px solid var(--border);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .drawer.open {
+    transform: translate(-50%, 0);
+  }
+  .drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .drawer-head h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .drawer-list {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 12px 16px 12px;
+  }
+  .drawer-item {
+    width: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    padding: 11px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .drawer-item.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-text);
+  }
+  .drawer-item-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .drawer-item-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .drawer-item-time {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .drawer-item.active .drawer-item-time {
+    color: var(--accent-text);
+  }
+
+  .swipe-tip {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body data-theme="light">
+
+<div class="app">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="top-left">
+      <button class="icon-btn" id="menuBtn" aria-label="目錄">☰ 目錄</button>
+      <button class="timer-pill" id="timerBtn" title="點擊開始／暫停計時">
+        <span class="timer-dot"></span>
+        <span id="timerDisplay">00:00</span>
+      </button>
+      <button class="icon-btn" id="timerResetBtn" title="重置計時" style="padding:0 8px;">↺</button>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" id="fontDownBtn" aria-label="縮小字體">A-</button>
+      <button class="icon-btn" id="fontUpBtn" aria-label="放大字體">A+</button>
+      <button class="icon-btn" id="themeBtn" aria-label="切換深淺模式">☾</button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="card-scroller" id="cardScroller">
+      <article class="card" id="card"></article>
+      <div class="swipe-tip">左右滑動螢幕或點選下方按鈕翻頁</div>
+    </div>
+  </main>
+
+  <footer class="bottombar">
+    <button class="nav-btn" id="prevBtn">‹ 上一頁</button>
+    <button class="page-pill" id="pageIndicator">
+      <span id="pageNum">1 / 17</span>
+      <small id="pageTarget">目標 0:30</small>
+    </button>
+    <button class="nav-btn primary" id="nextBtn">下一頁 ›</button>
+  </footer>
+</div>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2>快速跳頁（20 分鐘時間軸）</h2>
+    <button class="icon-btn" id="closeDrawerBtn">✕</button>
+  </div>
+  <div class="drawer-list" id="drawerList"></div>
+</aside>
+
+<script>
+const SLIDES = [
+  {
+    id: 1,
+    part: "Part 1｜Introduction（0:00–4:00）",
+    title: "Slide 1｜Title",
+    duration: "0:30",
+    cumTime: "0:30",
+    cumSec: 30,
+    paragraphs: [
+      "各位老師、同學大家好。我今天要報告的論文是 2026 年 7 月發表在 Journal of Clinical Microbiology 的〈Risk assessment and mitigation of hepatitis C virus RNA carryover contamination in a reflex testing algorithm〉，背景來自美國的醫院檢驗部。這篇想回答一個很實際的檢驗科問題：用同一管血先驗 HCV 抗體、再直接拿去驗 RNA，實驗室要怎麼管理交叉污染產生假陽性這個風險？"
+    ]
+  },
+  {
+    id: 2,
+    part: "Part 1｜Introduction（0:00–4:00）",
+    title: "Slide 2｜Background: HCV & Two-Step Diagnosis",
+    duration: "1:15",
+    cumTime: "1:45",
+    cumSec: 105,
+    paragraphs: [
+      "先講背景。大多數感染 C 型肝炎病毒的人沒辦法自行清除病毒，會變成慢性感染，再慢慢進展成肝硬化、肝衰竭，甚至肝癌。現在已經有藥物 DAA 可以治癒，所以真正的關鍵在於「把病人找出來，並且接上治療」。",
+      "要確診「活動性」感染需要兩步：第一步驗抗體，抗體陽性之後，第二步驗 HCV RNA。為什麼不能只看抗體？因為抗體只代表曾經暴露過，治癒或自己清掉病毒的人抗體也會一直是陽性。傳統做法是等抗體報告出來，再叫病人回來抽第二次血驗 RNA。在這種兩次採檢的模式下，有 33% 到 89% 的病人不會回來。也就是說，很多病人卡在抗體陽性這一步就斷掉了。因為在美國感染 C 型肝炎的這群人，正好就是脆弱的一群人，年輕靜脈注射藥癮者，你要讓他們再回來抽血，他們不太會回。"
+    ]
+  },
+  {
+    id: 3,
+    part: "Part 1｜Introduction（0:00–4:00）",
+    title: "Slide 3｜Single-Visit Testing: Two Tubes vs. Reflex",
+    duration: "1:15",
+    cumTime: "3:00",
+    cumSec: 180,
+    paragraphs: [
+      "為了解決這個問題，美國 CDC 在 2023 年的操作指引中建議「單次就診完成檢測」，也就是抗體和 RNA 都用同一次就診抽的血來做。做法有兩種。",
+      "第一種是一次抽兩管，一管驗抗體、一管留著驗 RNA。這完全沒有交叉污染的問題，但美國 HCV 抗體盛行率只有 1.7%，代表有 98% 多抽的那一管根本用不到，實務上很難執行，會浪費掉很多的醫療資源。",
+      "第二種就是今天的主角：reflex testing，抗體陽性後直接拿同一管去驗 RNA。研究顯示這可以讓「漏做 RNA 確認」的比例降低最多 76%，也能明顯改善銜接治療的比例。聽起來很好，但根據美國公衛實驗室協會的調查，還有大約一半的實驗室沒有採用 reflex 策略。為什麼？這就跟今天的論文主題有關，因為它們怕檢體在「上游血清學儀器」已被開蓋或分注吸取過，所以存在發生交叉污染（Carryover）的風險。"
+    ]
+  },
+  {
+    id: 4,
+    part: "Part 1｜Introduction（0:00–4:00）",
+    title: "Slide 4｜Research Gap & Aims",
+    duration: "1:00",
+    cumTime: "4:00",
+    cumSec: 240,
+    paragraphs: [
+      "剛才講到最大的顧慮就是 carryover contamination。抗體是在上游的化學免疫分析儀上做的，如果機器用固定針吸檢體，前一管高病毒量的檢體可能殘留一點點在針上，污染到下一管陰性檢體。之後這管拿去做非常靈敏的 PCR，就可能測出一個低病毒量的假陽性。過去文獻認為這類污染主要出現在 1,000 IU/mL 以下的低病毒量；也有研究在 cobas 6800 上，觀察到緊接著陽性檢體上機的陰性檢體中有 3.29% 被污染。這在臨床上來說，就會造成不必要的醫療處置。",
+      "所以這篇研究有三個目的：第一，在真實的 5 間區域實驗室中量化污染風險；第二，評估一套針對低陽性結果的審核流程能不能降低假陽性；第三，提供其他實驗室可以照著做的 SOP。"
+    ]
+  },
+  {
+    id: 5,
+    part: "Part 2｜Methods（4:00–8:45）",
+    title: "Slide 5｜Study Design Overview",
+    duration: "1:00",
+    cumTime: "5:00",
+    cumSec: 300,
+    paragraphs: [
+      "研究在 Cleveland Clinic（克里夫蘭醫學中心）的檢驗進行。抗體在五家區域實驗室做，A、B、C 在俄亥俄州，D、E 在佛羅里達州。只要抗體是 reactive 或 equivocal，原管就送到中央分子實驗室，用 Roche cobas 8800 做 HCV RNA，偵測下限是 15 IU/mL。",
+      "研究分兩部分。第一部分是刻意設計的污染模擬測試，研究者把殘餘病人血清混成 5 管高陽性，每管都超過一百萬 IU/mL，再混 5 管 RNA 陰性，送到五家實驗室，要求用「一正一負交替」的順序上機驗抗體。這等於刻意製造最容易污染的情境，每一管陰性前面都緊接著一管超高病毒量的檢體。做完後送回中央實驗室，看陰性那幾管有沒有驗出 RNA；第二部分是導入了一套新作業流程，橫跨 33 個月的前後對照研究，總共 9,237 件抗體異常檢體，其中 157 件低陽性逐一翻病歷判定真偽。"
+    ]
+  },
+  {
+    id: 6,
+    part: "Part 2｜Methods（4:00–8:45）",
+    title: "Slide 6｜Part 1: Contrived Carryover Assessment（Table 1）",
+    duration: "1:30",
+    cumTime: "6:30",
+    cumSec: 390,
+    paragraphs: [
+      "先看第一部分的結果會比較順，因為這影響後面的實驗設計。每一管陰性前面都緊接著一管超高病毒量的檢體，看陰性那幾管有沒有驗出 RNA。",
+      "結果在 Table 1。25 管陰性中有 2 管被污染，也就是 8%，病毒量分別是 43.7 和 59.9 IU/mL，都很低。用固定針的 Lab A 出現污染在預期之內；但比較意外的是，使用拋棄式吸頭的 Lab D 也有一管被污染。作者推測可能來自人工前處理、機台內的噴濺或滴漏，而且 Lab D 做測試時，這項檢驗才剛上線幾個月。重點是：<strong>污染風險不只存在於固定針機台</strong>，所以需要一個不分平台、放在下游的把關機制。"
+    ]
+  },
+  {
+    id: 7,
+    part: "Part 2｜Methods（4:00–8:45）",
+    title: "Slide 7｜Part 2: Risk Mitigation Intervention",
+    duration: "1:15",
+    cumTime: "7:45",
+    cumSec: 465,
+    paragraphs: [
+      "第二部分的介入在 2023 年 6 月上線。規則很簡單：只要 reflex 出來的 RNA 小於 1,000 IU/mL，也就是所謂的 low-positive，醫檢師先不發報告，交給醫療主任看病歷。病人如果有未治療或沒治療完全的活動性 HCV 病史，或者有符合急性肝炎的症狀，就核准發陽性報告；如果病歷沒有任何佐證，就取消這筆檢驗，請臨床另外抽一管專用檢體重驗。",
+      "因為這種事件很少見，一開始常常有人漏看，所以團隊在 LIS 加了警示旗標，阻止這類結果被自動驗證。但旗標後來也出包，這個等一下會看到。分析採 intent-to-treat 原則，也就是漏掉沒攔到的案例也算在介入後，不會因此高估介入效果。"
+    ]
+  },
+  {
+    id: 8,
+    part: "Part 2｜Methods（4:00–8:45）",
+    title: "Slide 8｜Clinical Adjudication & Statistics",
+    duration: "1:00",
+    cumTime: "8:45",
+    cumSec: 525,
+    paragraphs: [
+      "157 件低陽性的真偽，是在結果出來超過 90 天之後人工翻病歷判定的。真陽性只要符合其中一項：90 天內再驗 RNA 陽性或基因分型成功、已知有未治療的慢性 HCV，或採檢當時正在吃 DAA。假陽性是 90 天內再驗 RNA 測不到，或抗體陰性。兩者都不符合的歸為 Unknown。",
+      "統計上，類別變項用卡方或 Fisher 檢定；病毒量分布很偏，所以用無母數的 Wilcoxon 和 Kruskal-Wallis，兩兩比較用 Bonferroni 校正。低於定量下限的「detected <15」一律當作 14 IU/mL 計算。"
+    ]
+  },
+  {
+    id: 9,
+    part: "Part 3｜Results（8:45–17:00）",
+    title: "Slide 9｜Workflow & Outcomes（Fig. 1）",
+    duration: "1:45",
+    cumTime: "10:30",
+    cumSec: 630,
+    paragraphs: [
+      "這張 Figure 1 是整篇論文的骨架。請先切兩刀：左右是介入前和介入後；中間那條水平虛線，上面是當下實際的發報告流程，下面是 90 天後回頭翻病歷判定的結果。",
+      "左邊介入前，4,401 件抗體異常，扣掉 322 件因為檢體量不足等原因取消，有 4,079 件做了 reflex RNA，其中 1,188 件陽性；79 件是低陽性，全部照常發報告。事後判定，裡面有 18 件是假陽性。",
+      "右邊介入後，78 件低陽性理論上應該全部被攔下來審核，但實際上只有 44 件被攔到。結果分三支：第一，主任審核後放行的 8 件，<strong>8 件全部是真陽性，假陽性是 0</strong>；第二，沒被攔到、直接發出去的 34 件，<strong>介入後所有 6 件假陽性都在這裡</strong>；第三，審核後取消的 36 件，擋下了 14 件假陽性，但也有 7 件其實是真陽性被取消。",
+      "我自己額外算了一下：介入後儀器端產生的假陽性是發出去的 6 件加上擋下的 14 件，共 20 件，除以 4,433 大約 0.45%，和介入前的 0.44% 幾乎一樣。這表示污染本身並沒有變少，假陽性報告減少完全是靠審核攔下來的。"
+    ]
+  },
+  {
+    id: 10,
+    part: "Part 3｜Results（8:45–17:00）",
+    title: "Slide 10｜Pre vs. Post Intervention（Table 2）",
+    duration: "1:30",
+    cumTime: "12:00",
+    cumSec: 720,
+    paragraphs: [
+      "Table 2 是整體比較。建議分三層看。",
+      "第一層是「沒有變」的東西：介入前後 RNA 陽性率是 29.1% 對 28.4%，病毒量中位數 6.12 對 6.07 log，都沒有顯著差異，代表兩段時間的病人群可以互相比較。",
+      "第二層是主要結果：發出去低陽性比例從 1.9% 減半到 0.96%；<strong>發出去的假陽性從 0.44% 降到 0.14%，P = 0.008</strong>，相對降幅大約七成。",
+      "第三層是 reflex 取消率：取消率從 7.3% 升到 9.1%。增加的 1.8 個百分點裡，審核取消只占約 0.7 個百分點，另外約 1.0 個百分點來自作業性取消（主要是檢體量不足）本身變多，這部分和介入無關。"
+    ]
+  },
+  {
+    id: 11,
+    part: "Part 3｜Results（8:45–17:00）",
+    title: "Slide 11｜Reported Viral Loads（Fig. 2）",
+    duration: "1:00",
+    cumTime: "13:00",
+    cumSec: 780,
+    paragraphs: [
+      "Figure 2 把所有「實際發出去」的陽性結果畫成直方圖，橫軸是 log 病毒量。紅色是 1,000 IU/mL 以上的高陽性，中位數在 6 log 左右，也就是約一百萬 IU/mL；藍色是左邊那條低陽性的尾巴。",
+      "比較 A 和 B，紅色主體的形狀和位置幾乎一模一樣；但藍色尾巴明顯變薄，尤其最左邊、最低病毒量那一根，從大約 20 件降到大約 9 件。也就是說，這個介入只修掉了最可疑的低值尾巴，絕大多數典型高病毒量的病人照常立刻拿到報告，完全不受影響。"
+    ]
+  },
+  {
+    id: 12,
+    part: "Part 3｜Results（8:45–17:00）",
+    title: "Slide 12｜Low-Positive Results（Table 3）",
+    duration: "1:15",
+    cumTime: "14:15",
+    cumSec: 855,
+    paragraphs: [
+      "Table 3 把措施前後 157 件低陽性拆成三欄。先比較前兩欄「有發出去的」：介入後發出去的低陽性，真陽性比例從 38% 提高到 69%，病毒量中位數也從 27.7 提高到 92.4 IU/mL，代表發出去的報告品質變好了。第三欄被取消的 36 件，病毒量最低，低於 15 IU/mL 的比例最高，假陽性比例也最高，達 38.9%，表示醫療主任的判斷確實有把可疑的挑出來。",
+      "這張表最震撼的一行是：三個時期加起來共 38 件假陽性，<strong>100% 都來自 Lab A</strong>，也就是使用固定針的那家；其他四家在臨床上一件都沒有。另外，表下註腳寫明，介入後那 6 件假陽性全都是因為沒有被正確標記，換句話說，問題出在流程執行，而不是流程設計——因為實驗室資訊系統（LIS）旗標建置邏輯錯誤，介入後所有錯發給臨床的 6 件假陽性結果，全數皆因介入失敗而未經審核即誤發。"
+    ]
+  },
+  {
+    id: 13,
+    part: "Part 3｜Results（8:45–17:00）",
+    title: "Slide 13｜Clinical Characteristics（Table 4）",
+    duration: "1:15",
+    cumTime: "15:30",
+    cumSec: 930,
+    paragraphs: [
+      "Table 4 回答一個問題：醫療主任到底靠什麼判斷？答案是檢前機率。真陽性和假陽性兩群人的臨床樣貌差很多：真陽性有既往 HCV 感染史的占 75.8%，假陽性只有 28.9%；有靜脈藥癮史的是 66.7% 對 10.5%；近 90 天有相關症狀的是 51.5% 對 18.4%。這就是為什麼主任看完病歷放行的 8 件全部正確。",
+      "有個細節可能會被問到：為什麼假陽性裡也有將近三成有 HCV 病史、18.4% 吃過 DAA？因為治癒或自行清除的人，抗體會長期維持陽性，每次篩檢都會被 reflex 去驗 RNA，一旦遇到污染就成了假陽性。",
+      "另外請記住 Unknown 這一欄：他們 100% 沒有在 90 天內回來重驗，但靜脈藥癮史高達 47.2%，這點在下一張圖會很重要。"
+    ]
+  },
+  {
+    id: 14,
+    part: "Part 3｜Results（8:45–17:00）",
+    title: "Slide 14｜Viral Load by Adjudication Status & Optimal Cutoff（Fig. 3）",
+    duration: "1:30",
+    cumTime: "17:00",
+    cumSec: 1020,
+    paragraphs: [
+      "Figure 3 是 157 件低陽性依判定結果畫的箱型圖。藍色真陽性的中位數是 97 IU/mL，顯著高於紅色假陽性的 17（P = 0.003）和綠色 Unknown 的 16（P < 0.001）。有趣的是，假陽性和 Unknown 的 P 值是 1.000，兩群幾乎完全重疊，暗示 Unknown 裡面可能藏了不少假陽性；但別忘了上一張表，Unknown 裡將近一半有藥癮史，也可能是真正的感染者只是沒有回來。",
+      "接著是門檻怎麼訂。整個研究最高的假陽性是 535 IU/mL，所以原本訂的 1,000 IU/mL 幾乎可以抓到全部假陽性。下面這張表顯示，門檻越往下降，低於門檻的結果是假陽性的機率越高，從 36.5% 升到 82.6%，但漏掉的假陽性也從 0 增加到一半。",
+      "權衡之後，Cleveland Clinic 在修正 LIS 規則後，<strong>已經改成以 100 IU/mL 為界：reflex 結果低於 100 就直接取消、要求重抽，不再需要醫療主任逐件審核</strong>。在這個門檻下，超過一半是假陽性，漏掉的假陽性約 13%，換來的是人力負擔大幅降低。"
+    ]
+  },
+  {
+    id: 15,
+    part: "Part 4｜Discussion & Conclusion（17:00–20:00）",
+    title: "Slide 15｜Public Health Impact & Policy",
+    duration: "1:00",
+    cumTime: "18:00",
+    cumSec: 1080,
+    paragraphs: [
+      "這樣做值不值得？看失聯率就知道。被取消要求重抽的 36 個人中，有 15 個，也就是 41.7%，90 天內沒有回來。作者把這個比例套用到所有 reflex 的病人，估計在 33 個月內，reflex 策略讓大約 3,740 位病人多拿到確認性的 RNA 結果；因此作者建議，美國肝病學會和感染症學會的指引可以考慮明訂一個「低病毒量需重抽確認」的門檻，消除實驗室對污染的顧慮，讓更多實驗室願意採用 reflex。"
+    ]
+  },
+  {
+    id: 16,
+    part: "Part 4｜Discussion & Conclusion（17:00–20:00）",
+    title: "Slide 16｜Strengths, Limitations & Critical Appraisal",
+    duration: "1:30",
+    cumTime: "19:30",
+    cumSec: 1170,
+    paragraphs: [
+      "最後做評析。優點是涵蓋兩州五家實驗室、三種平台，而且有詳細的病歷可以判定真偽，也沒有排除既往抗體陽性的病人，比較貼近真實世界。作者自己承認的限制包括：只用了一個 RNA 平台；判定可能分錯，例如低病毒量的真感染者在 90 天內自行清除，會被誤判成假陽性，反過來也可能有人在兩次檢驗之間新感染。",
+      "我自己補充幾點。第一，介入只成功執行了 56.4%，原因是 LIS 旗標的邏輯綁在 auto-verification 開啟時才會觸發，這是很典型的資訊系統教訓。第二，Unknown 占三分之一（病人沒有回來重抽，無法判斷真假），作者沒有做最好和最壞情況的敏感度分析。第三，Lab A 本身就占了 85.6% 的檢體量，作者也提到它離分子實驗室最近、運送時間短，低濃度 RNA 比較不會降解，所以假陽性全部來自 Lab A 不一定只是固定針造成的。第四，有 7 位真陽性被取消，改成 100 IU/mL 自動取消後，被取消的真陽性可能會更多。"
+    ]
+  },
+  {
+    id: 17,
+    part: "Part 4｜Discussion & Conclusion（17:00–20:00）",
+    title: "Slide 17｜Take-Home Message",
+    duration: "0:30",
+    cumTime: "20:00",
+    cumSec: 1200,
+    paragraphs: [
+      "總結三句話：第一，單管 reflex 的交叉污染是真的存在，但在臨床上非常少見，假陽性率只有 0.44%。第二，把小於 1,000 IU/mL 的結果先攔下來審核，可以把假陽性降到 0.14%，而且只要確實執行，放行的結果全部正確。第三，用一個病毒量門檻加上重抽，就能讓 reflex testing 既安全又可以推廣。以上是我的報告，謝謝大家，歡迎提問。"
+    ]
+  },
+  {
+    id: 18,
+    isQA: true,
+    part: "備用｜提問防禦",
+    title: "預想 Q&A（點擊問題展開回答）",
+    duration: "Q&A",
+    cumTime: "Q&A",
+    cumSec: 1200,
+    qas: [
+      {
+        q: "1. 模擬測試污染率 8%，臨床卻只有 0.44%，為什麼差這麼多？",
+        a: "模擬測試刻意讓每一管陰性都緊接在 ≥10⁶ IU/mL 的檢體後面；臨床上陽性檢體比例低，病毒量也不一定那麼高，陰性剛好排在超高值後面的機會小得多。"
+      },
+      {
+        q: "2. Lab D 模擬時有污染，臨床上 B–E 卻 0 件假陽性？",
+        a: "Lab D 全期只有 70 件檢體、B–E 合計約 14%，在 0.44% 的事件率下本來就很難觀察到（以 0.44% 推算 Lab D 期望值約 0.3 件）。不能據此說拋棄式吸頭臨床上零風險。"
+      },
+      {
+        q: "3. 治癒過的人怎麼會進到 reflex？",
+        a: "Anti-HCV 代表曾經暴露，治癒或自行清除後仍可長期陽性；只要再篩一次抗體就會被 reflex 去驗 RNA。"
+      },
+      {
+        q: "4. 人工審核太耗人力？",
+        a: "33 個月共 157 件，平均每月不到 5 件；而且新制改成 <100 IU/mL 由系統自動取消並要求重抽，已不需要主任逐件審核。"
+      },
+      {
+        q: "5. <100 IU/mL 新制的代價？",
+        a: "會漏掉約 13%（5/38）介於 100–535 IU/mL 的假陽性（約占全部 8,476 件的 0.06%），也會取消一部分低病毒量的真陽性；在高失聯族群中，取消可能等於失去確診機會。"
+      }
+    ]
+  }
+];
+
+let current = Number(localStorage.getItem("hcv_slide_idx") || 0);
+if (current < 0 || current >= SLIDES.length) current = 0;
+
+let fontSize = Number(localStorage.getItem("hcv_font_size") || 20);
+let theme = localStorage.getItem("hcv_theme") || "light";
+
+const cardEl = document.getElementById("card");
+const scrollerEl = document.getElementById("cardScroller");
+const progressFill = document.getElementById("progressFill");
+const pageNum = document.getElementById("pageNum");
+const pageTarget = document.getElementById("pageTarget");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const drawer = document.getElementById("drawer");
+const drawerBackdrop = document.getElementById("drawerBackdrop");
+const drawerList = document.getElementById("drawerList");
+const themeBtn = document.getElementById("themeBtn");
+
+function applyTheme() {
+  document.body.setAttribute("data-theme", theme);
+  themeBtn.textContent = theme === "light" ? "☾" : "☀︎";
+  localStorage.setItem("hcv_theme", theme);
+}
+
+function applyFontSize() {
+  document.documentElement.style.setProperty("--script-size", fontSize + "px");
+  localStorage.setItem("hcv_font_size", String(fontSize));
+}
+
+function renderSlide(animateDir = 0) {
+  const s = SLIDES[current];
+  localStorage.setItem("hcv_slide_idx", String(current));
+
+  if (animateDir !== 0) {
+    scrollerEl.style.transition = "none";
+    scrollerEl.style.opacity = "0.25";
+    scrollerEl.style.transform = `translateX(${animateDir > 0 ? 28 : -28}px)`;
+  }
+
+  let bodyHtml = "";
+  if (s.isQA) {
+    bodyHtml = s.qas.map((item, idx) => `
+      <div class="qa-item${idx > 0 ? " collapsed" : ""}">
+        <button class="qa-q" type="button">
+          <span>${item.q}</span>
+          <span class="qa-arrow">▼</span>
+        </button>
+        <div class="qa-a">${item.a}</div>
+      </div>
+    `).join("");
+  } else {
+    bodyHtml = `<div class="script-body">${s.paragraphs.map(p => `<p>${p}</p>`).join("")}</div>`;
+  }
+
+  const nextSlide = SLIDES[current + 1];
+  const nextHintHtml = nextSlide ? `
+    <div class="next-hint" id="nextHint">
+      <span>下一頁：<strong>${nextSlide.title}</strong></span>
+      <span>→</span>
+    </div>
+  ` : "";
+
+  cardEl.innerHTML = `
+    <div class="meta-row">
+      <span class="part-badge">${s.part}</span>
+      <span class="time-chip">${s.isQA ? "提問環節" : `建議 ${s.duration} · 累計至 ${s.cumTime}`}</span>
+    </div>
+    <h1 class="slide-title">${s.title}</h1>
+    ${bodyHtml}
+    ${nextHintHtml}
+  `;
+
+  if (s.isQA) {
+    cardEl.querySelectorAll(".qa-q").forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.parentElement.classList.toggle("collapsed");
+      });
+    });
+  }
+
+  const nh = document.getElementById("nextHint");
+  if (nh) nh.addEventListener("click", () => goTo(current + 1, 1));
+
+  scrollerEl.scrollTop = 0;
+
+  if (animateDir !== 0) {
+    requestAnimationFrame(() => {
+      scrollerEl.style.transition = "transform 0.22s ease, opacity 0.22s ease";
+      scrollerEl.style.opacity = "1";
+      scrollerEl.style.transform = "translateX(0)";
+    });
+  }
+
+  const pct = ((current + 1) / SLIDES.length) * 100;
+  progressFill.style.width = pct + "%";
+
+  if (s.isQA) {
+    pageNum.textContent = "備用 Q&A";
+    pageTarget.textContent = "5 題防禦";
+  } else {
+    pageNum.textContent = `${s.id} / 17`;
+    pageTarget.textContent = `目標 ${s.cumTime}`;
+  }
+
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === SLIDES.length - 1;
+  nextBtn.textContent = current === 16 ? "備用 Q&A ›" : "下一頁 ›";
+
+  updateTimerColor();
+  renderDrawer();
+}
+
+function goTo(index, dir = 0) {
+  if (index < 0 || index >= SLIDES.length || index === current) return;
+  current = index;
+  renderSlide(dir);
+}
+
+function renderDrawer() {
+  drawerList.innerHTML = SLIDES.map((s, idx) => `
+    <button class="drawer-item ${idx === current ? "active" : ""}" data-idx="${idx}">
+      <div>
+        <div class="drawer-item-title">${s.title}</div>
+        <div class="drawer-item-sub">${s.part}</div>
+      </div>
+      <div class="drawer-item-time">${s.isQA ? "Q&A" : `${s.duration} / ${s.cumTime}`}</div>
+    </button>
+  `).join("");
+
+  drawerList.querySelectorAll(".drawer-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = Number(btn.dataset.idx);
+      closeDrawer();
+      goTo(idx, idx > current ? 1 : -1);
+    });
+  });
+}
+
+function openDrawer() {
+  drawer.classList.add("open");
+  drawerBackdrop.classList.add("open");
+  const active = drawerList.querySelector(".drawer-item.active");
+  if (active) active.scrollIntoView({ block: "center" });
+}
+function closeDrawer() {
+  drawer.classList.remove("open");
+  drawerBackdrop.classList.remove("open");
+}
+
+// Timer logic
+let timerRunning = false;
+let elapsedSec = 0;
+let timerInterval = null;
+const timerBtn = document.getElementById("timerBtn");
+const timerDisplay = document.getElementById("timerDisplay");
+
+function formatTime(sec) {
+  const m = String(Math.floor(sec / 60)).padStart(2, "0");
+  const s = String(sec % 60).padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+function updateTimerColor() {
+  const s = SLIDES[current];
+  timerBtn.classList.remove("overtime");
+  if (!s.isQA && elapsedSec > s.cumSec) {
+    timerBtn.classList.add("overtime");
+  }
+}
+
+timerBtn.addEventListener("click", () => {
+  timerRunning = !timerRunning;
+  timerBtn.classList.toggle("running", timerRunning);
+  if (timerRunning) {
+    timerInterval = setInterval(() => {
+      elapsedSec++;
+      timerDisplay.textContent = formatTime(elapsedSec);
+      updateTimerColor();
+    }, 1000);
+  } else {
+    clearInterval(timerInterval);
+  }
+});
+
+document.getElementById("timerResetBtn").addEventListener("click", () => {
+  timerRunning = false;
+  clearInterval(timerInterval);
+  elapsedSec = 0;
+  timerDisplay.textContent = "00:00";
+  timerBtn.classList.remove("running", "overtime");
+});
+
+// Controls
+prevBtn.addEventListener("click", () => goTo(current - 1, -1));
+nextBtn.addEventListener("click", () => goTo(current + 1, 1));
+document.getElementById("menuBtn").addEventListener("click", openDrawer);
+document.getElementById("pageIndicator").addEventListener("click", openDrawer);
+document.getElementById("closeDrawerBtn").addEventListener("click", closeDrawer);
+drawerBackdrop.addEventListener("click", closeDrawer);
+
+document.getElementById("fontDownBtn").addEventListener("click", () => {
+  fontSize = Math.max(15, fontSize - 2);
+  applyFontSize();
+});
+document.getElementById("fontUpBtn").addEventListener("click", () => {
+  fontSize = Math.min(30, fontSize + 2);
+  applyFontSize();
+});
+themeBtn.addEventListener("click", () => {
+  theme = theme === "light" ? "dark" : "light";
+  applyTheme();
+});
+
+// Keyboard navigation
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight" || e.key === "PageDown") goTo(current + 1, 1);
+  if (e.key === "ArrowLeft" || e.key === "PageUp") goTo(current - 1, -1);
+  if (e.key === "Escape") closeDrawer();
+});
+
+// Touch Swipe Gestures
+let touchStartX = 0;
+let touchStartY = 0;
+let isSwiping = false;
+const stage = document.getElementById("stage");
+
+stage.addEventListener("touchstart", e => {
+  if (e.touches.length !== 1) return;
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  isSwiping = true;
+}, { passive: true });
+
+stage.addEventListener("touchend", e => {
+  if (!isSwiping) return;
+  isSwiping = false;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > 52 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+    if (dx < 0) goTo(current + 1, 1);
+    else goTo(current - 1, -1);
+  }
+}, { passive: true });
+
+applyTheme();
+applyFontSize();
+renderSlide(0);
+</script>
+</body>
+</html>
